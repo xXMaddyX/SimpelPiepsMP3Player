@@ -1,8 +1,11 @@
 <script setup>
 import { inject } from 'vue';
+import { store } from '../store';
 
 const tracklist = inject('musicFiles');
-const emit = defineEmits(['trackSelected']); 
+const emit = defineEmits(['trackSelected']);
+
+
 
 const selectTrack = (track, index) => {
   emit('trackSelected', track, index);
@@ -12,7 +15,10 @@ const selectTrack = (track, index) => {
 <template>
     <div>
         <ul>
-          <li v-for="(track, index) in tracklist" :key="index" @click="selectTrack(track, index)">
+          <li v-for="(track, index) in tracklist" 
+              :key="index" 
+              @click="selectTrack(track, index)"
+              :class="{'playing': index === store.currentTrackIndex}"> 
               {{ track }}
           </li>
         </ul>
@@ -68,4 +74,9 @@ div ul li:hover {
   ::-webkit-scrollbar-track {
     background-color: #3a3a3a00; /* Hintergrundfarbe der Scrollbar */
   }
+
+  div ul li.playing {
+    background-color: rgb(80, 80, 80);
+    color: white;
+}
 </style>
