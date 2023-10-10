@@ -1,8 +1,9 @@
 <script setup>
 import { ref, inject } from 'vue';
+import { store } from '../store'
 
 const audioPlayer = ref(null);
-const currentTrackIndex = ref(0);
+//const currentTrackIndex = ref(0);
 const tracklist = inject('musicFiles');
 const currentTrackName = ref('');
 const substringTrackSplit = ref([]);
@@ -11,16 +12,17 @@ const newTrackName = ref('');
 const playTrack = (trackPath, index) => {
   audioPlayer.value.src = trackPath;
   audioPlayer.value.play();
-  currentTrackIndex.value = index;
+  store.currentTrackIndex = index;
   currentTrackName.value = tracklist.value[index];
   substringTrackSplit.value = currentTrackName.value.split('/');
   newTrackName.value = substringTrackSplit.value[substringTrackSplit.value.length -1];
+  
 };
 
 const playNextTrack = () => {
-  if (currentTrackIndex.value + 1 < tracklist.value.length) {
-    currentTrackIndex.value++;
-    playTrack(tracklist.value[currentTrackIndex.value], currentTrackIndex.value);
+  if (store.currentTrackIndex + 1 < tracklist.value.length) {
+    store.currentTrackIndex++;
+    playTrack(tracklist.value[store.currentTrackIndex], store.currentTrackIndex);
   }
 };
 
