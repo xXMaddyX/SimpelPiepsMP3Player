@@ -5,12 +5,16 @@ const audioPlayer = ref(null);
 const currentTrackIndex = ref(0);
 const tracklist = inject('musicFiles');
 const currentTrackName = ref('');
+const substringTrackSplit = ref([]);
+const newTrackName = ref('');
 
 const playTrack = (trackPath, index) => {
   audioPlayer.value.src = trackPath;
   audioPlayer.value.play();
   currentTrackIndex.value = index;
   currentTrackName.value = tracklist.value[index];
+  substringTrackSplit.value = currentTrackName.value.split('/');
+  newTrackName.value = substringTrackSplit.value[substringTrackSplit.value.length -1];
 };
 
 const playNextTrack = () => {
@@ -25,7 +29,7 @@ defineExpose({ playTrack, playNextTrack })
 
 <template>
     <main class="fixed-player">
-        <h3>{{ currentTrackName }}</h3>
+        <h3>{{ newTrackName }}</h3>
         <img src="../assets/PiepsmitTasse.png" alt="">
         <audio ref="audioPlayer" controls @ended="playNextTrack"></audio>
     </main>
