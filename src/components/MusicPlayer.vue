@@ -3,7 +3,6 @@ import { ref, inject } from 'vue';
 import { store } from '../store'
 
 const audioPlayer = ref(null);
-//const currentTrackIndex = ref(0);
 const tracklist = inject('musicFiles');
 const currentTrackName = ref('');
 const substringTrackSplit = ref([]);
